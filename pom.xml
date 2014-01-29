@@ -5,13 +5,13 @@
     <groupId>org.woehlke.addresslist.jee6</groupId>
     <artifactId>addresslist_jee6</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
 
     <name>addresslist_jee6</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.jboss.maven.plugin>7.3.Final</version.jboss.maven.plugin>
     </properties>
 
     <dependencies>
@@ -43,6 +43,7 @@
                 <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>${project.artifactId}</warName>
                 </configuration>
             </plugin>
             <plugin>
@@ -70,7 +71,18 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
+            <!-- To use, run: mvn package jboss-as:deploy -->
+            <plugin>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <version>${version.jboss.maven.plugin}</version>
+                <configuration>
+                	<filename>${project.artifactId}.${project.packaging}</filename>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
+    <packaging>war</packaging>
 </project>
